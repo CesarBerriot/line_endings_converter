@@ -1,0 +1,3 @@
+add_executable(line_endings_converter)
+discover_sources(line_endings_converter)
+target_link_libraries(line_endings_converter PRIVATE backend)

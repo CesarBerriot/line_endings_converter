@@ -1,0 +1,17 @@
+add_library(backend)
+discover_sources(backend)
+target_link_libraries(backend PRIVATE hard_assert make_string dirent)
+target_include_directories(backend PUBLIC include PRIVATE source)
+target_compile_definitions(backend PRIVATE MODULE_NAME="line_endings_converter")
+
+if(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
+  target_compile_options(backend PRIVATE /Wall /wd5045 /wd4820 /wd4267 /wd4388 /wd4100 /wd4710 /wd4711)
+  target_compile_definitions(backend PRIVATE _CRT_SECURE_NO_WARNINGS)
+elseif(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+  target_compile_options(backend PRIVATE -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter)
+endif()
+
+if(${BUILD_TESTING})
+  file(COPY tests/test_directory DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+  setup_gtest(backend hard_assert pre_main_runner make_string)
+endif()

@@ -1,0 +1,1 @@
+void log_global_incorrect_line_endings_count(void);

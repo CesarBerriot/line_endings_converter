@@ -1,0 +1,1 @@
+extern int global_incorrect_line_endings_count;
